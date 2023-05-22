@@ -23,7 +23,7 @@ typedef enum {
 #define GPIO_PORT_D         3
 #define GPIO_PORT_E         4
 #define GPIO_PORT_H         7
-#define CRC   C             12
+#define CRC                 12
 #define DMA1                21
 #define DMA2                22
 

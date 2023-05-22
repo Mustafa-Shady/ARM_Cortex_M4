@@ -54,7 +54,7 @@ typedef enum {
  * @param mode The mode to be set for the pin (e.g., GPIO_PUSH_PULL for push-pull output mode).
  * @param speed The speed to be set for the pin (e.g., GPIO_LOW_SPEED for low output speed).
  */
-void GPIO_voidInitOutoutPin(GPIO_Port_Type port, GPIO_Pin_Type pin, GPIO_Mode_Type mode, GPIO_Speed_Type speed);
+void GPIO_voidInitOutputPin(GPIO_Port_Type port, GPIO_Pin_Type pin, GPIO_Mode_Type mode, GPIO_Speed_Type speed);
 
 /**
  * @brief Initializes a GPIO pin as an input pin with the specified mode.
@@ -83,5 +83,11 @@ void GPIO_voidSetOutPinValue(GPIO_Port_Type port, GPIO_Pin_Type pin, GPIO_Pin_Le
  * @return The value of the pin (GPIO_OUTPUT_LOW or GPIO_OUTPUT_HIGH).
  */
 GPIO_Pin_Level_Type GPIO_voidGetInputPinValue(GPIO_Port_Type port, GPIO_Pin_Type pin);
+
+void GPIO_voidSetOutPinValueFast(GPIO_Port_Type port, GPIO_Pin_Type pin, GPIO_Pin_Level_Type value);
+
+void GPIO_voidInitOutputPort(GPIO_Port_Type port , u16 Value);
+void GPIO_voidSetOutPortValue(GPIO_Port_Type port , u16 Value);
+
 
 #endif /* MCAL_GPIO_GPIO_INTERFACE_H_ */
