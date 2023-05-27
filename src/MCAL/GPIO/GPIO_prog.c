@@ -9,137 +9,125 @@
 #include "..\..\LIB\BIT_MATH.h"
 
 
-
-void GPIO_voidInitOutputPin(GPIO_Port_Type port, GPIO_Pin_Type pin, GPIO_Mode_Type mode, GPIO_Speed_Type speed)
+void GPIO_voidInitOutputPin(u8 Copy_u8PortID ,u8 Copy_u8PinID,u8 Copy_u8PinType , u8 Copy_u8PinSpeed)
 {
-    switch (port)
-    {
-    case GPIO_PORTA:
-        /*Set the direction to be Output*/
-        /*bit masking*/
-        GPIOA->MODER &= ~((0b11<<(pin*2)));
-        GPIOA->MODER |= ~((0b01<<(pin*2)));
-        
-        /*Set the speed to be Output*/
-        /*bit masking*/
-        GPIOA->OSPEEDR &= ~((0b11<<(pin*2)));
-        GPIOA->OSPEEDR |= ~((speed<<(pin*2)));
+	switch(Copy_u8PortID)
+	{
+		case GPIO_PORTA :
+			/*Set direction of the pin to be output*/
+			/*bit masking*/
+			GPIOA->MODER &= ~(0b11<<(Copy_u8PinID*2));
+			GPIOA->MODER |= (0b01<<(Copy_u8PinID*2));
 
-        /*Set type of output pin*/
-        WRT_BIT(GPIOA->OTYPER, pin , mode);
-        
+			/*Set speed of the output pin*/
+			/*bit masking*/
+			GPIOA->OSPEEDR &= ~(0b11<<(Copy_u8PinID*2));
+			GPIOA->OSPEEDR |= (Copy_u8PinSpeed<<(Copy_u8PinID*2));
 
-        
-        break;
-    
-    case GPIO_PORTB:
+			/*Set type of output pin*/
+			WRT_BIT(GPIOA->OTYPER , Copy_u8PinID ,Copy_u8PinType);
+			break ;
 
-        GPIOB->MODER &= ~(0b11 << (pin * 2));
-        GPIOB->MODER |=  (0b01 << (pin * 2));
-    
-        /*Set type of output pin*/
-        WRT_BIT(GPIOB->OTYPER, pin , mode);
-        
-        break;
-    
-    case GPIO_PORTC:
+		case GPIO_PORTB :
 
-        GPIOC->MODER &= ~(0b11 << (pin * 2));
-        GPIOC->MODER |= (0b01 << (pin * 2));
+			break ;
 
-        /*Set type of output pin*/
-        WRT_BIT(GPIOC->OTYPER, pin , mode);
-        
-        break;
-    
-    default:
-        break;
-    }
+		case GPIO_PORTC :
+
+			break ;
+	}
 }
 
-void GPIO_voidInitInputPin(GPIO_Port_Type port, GPIO_Pin_Type pin, GPIO_Mode_Type mode)
+void GPIO_voidInitInputPin(u8 Copy_u8PortID , u8 Copy_u8PinID,u8 Copy_u8PullMode )
 {
+	switch(Copy_u8PortID)
+	{
+		   case GPIO_PORTA :
+			   /*configure the pin to be input*/
+			   /*mode register*/
+			   GPIOA->MODER &= ~(0b11<<(Copy_u8PinID*2));
+
+			   /*configure pull type*/
+			   GPIOA->PUPDR &= ~(0b11<<(Copy_u8PinID*2));
+			   GPIOA->PUPDR |= (Copy_u8PullMode <<(Copy_u8PinID*2));
+				break ;
+
+			case GPIO_PORTB :
+				break ;
+
+			case GPIO_PORTC :
+				break ;
+	}
+}
+void GPIO_voidSetOutPinValue(u8 Copy_u8PortID ,u8 Copy_u8PinID,u8 Copy_u8Value)
+{
+	switch(Copy_u8PortID)
+	{
+		case GPIO_PORTA :
+			WRT_BIT(GPIOA->ODR , Copy_u8PinID , Copy_u8Value);
+			break ;
+
+		case GPIO_PORTB :
+			WRT_BIT(GPIOB->ODR , Copy_u8PinID , Copy_u8Value);
+			break ;
+
+		case GPIO_PORTC :
+			WRT_BIT(GPIOC->ODR , Copy_u8PinID , Copy_u8Value);
+			break ;
+	}
 }
 
-void GPIO_voidSetOutPinValue(GPIO_Port_Type port, GPIO_Pin_Type pin, GPIO_Pin_Level_Type value)
+u8 GPIO_u8GetInputPinValue(u8 Copy_u8PortID , u8 Copy_u8PinID)
 {
-      switch (port)
-    {
-    case GPIO_PORTA:
-       
-        WRT_BIT(GPIOA->ODR,pin,value);
+	/*local variable to store the value of input pin*/
+	u8 Local_u8InputPinValue ;
 
-        break;
-    
-    case GPIO_PORTB:
+	switch(Copy_u8PortID)
+	{
+		case GPIO_PORTA :
+			Local_u8InputPinValue = GET_BIT(GPIOA->IDR , Copy_u8PinID);
+			break ;
 
-        WRT_BIT(GPIOB->ODR,pin,value);
+		case GPIO_PORTB :
+			break ;
 
-        break;
-    
-    case GPIO_PORTC:
+		case GPIO_PORTC :
+			break ;
+	}
 
-        WRT_BIT(GPIOC->ODR,pin,value);
-
-        break;
-    
-    default:
-        break;
-    }
+	return Local_u8InputPinValue ;
 }
 
-GPIO_Pin_Level_Type GPIO_voidGetInputPinValue(GPIO_Port_Type port, GPIO_Pin_Type pin)
+void GPIO_voidSetOutPinValueFast(u8 Copy_u8PortID , u8 Copy_u8PinID
+								, u8 Copy_u8Value)
 {
-	
-  GPIO_Pin_Level_Type value;
+	u32 Local_u32RegisterValue ;
 
-  switch (port)
-  {
-  case GPIO_PORTA:
-    value = GPIOA->IDR & (1 << pin);
-    break;
+	switch(Copy_u8PortID)
+	{
+		case GPIO_PORTA :
+			switch (Copy_u8Value) {
+				/*Set the pin value*/
+				/*access bits from 0 to 15*/
+				case GPIO_OUTPUT_HIGH:
+					Local_u32RegisterValue = 1<<Copy_u8PinID ;
+					break;
 
-  case GPIO_PORTB:
-    value = GPIOB->IDR & (1 << pin);
-    break;
+				/*Reset the pin value*/
+				/*access bits from 16 to 31*/
+				case GPIO_OUTPUT_LOW:
+					Local_u32RegisterValue = 1<<(Copy_u8PinID+16) ;
+					break;
+			}
 
-  case GPIO_PORTC:
-    value = GPIOC->IDR & (1 << pin);
-    break;
+			GPIOA->BSRR = Local_u32RegisterValue ;
+			break ;
 
-  default:
-    value = 0;
-    break;
-  }
+		case GPIO_PORTB :
+			break ;
 
-  return value;
-}
+		case GPIO_PORTC :
+			break ;
+	}
 
-void GPIO_voidSetOutPinValueFast(GPIO_Port_Type port, GPIO_Pin_Type pin, GPIO_Pin_Level_Type value)
-{
-    u32 local_u32RegVal=0;
-    switch (port)
-    {
-    case GPIO_PORTA:
-        {
-            switch (value)
-            {
-            case GPIO_OUTPUT_HIGH:
-                local_u32RegVal  = 1<<pin;
-                break;
-            
-            case GPIO_OUTPUT_LOW:
-                local_u32RegVal  = 1<<(pin+16);
-                break;
-            
-            default:
-                break;
-            }
-            GPIOA->BSRR = local_u32RegVal;
-        }
-        break;
-    
-    default:
-        break;
-    }
 }

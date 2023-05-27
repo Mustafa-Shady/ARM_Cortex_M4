@@ -1,38 +1,44 @@
-/*
- * This file is part of the µOS++ distribution.
- *   (https://github.com/micro-os-plus)
- * Copyright (c) 2014 Liviu Ionescu.
- *
- * Permission is hereby granted, free of charge, to any person
- * obtaining a copy of this software and associated documentation
- * files (the "Software"), to deal in the Software without
- * restriction, including without limitation the rights to use,
- * copy, modify, merge, publish, distribute, sublicense, and/or
- * sell copies of the Software, and to permit persons to whom
- * the Software is furnished to do so, subject to the following
- * conditions:
- *
- * The above copyright notice and this permission notice shall be
- * included in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
- * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
- * OTHER DEALINGS IN THE SOFTWARE.
- */
+#include "HAL/LEDMTRX/LEDMTRX_interface.h"
+#include "LIB/BIT_MATH.h"
+#include "LIB/STD_TYPES.h"
 
-// ----------------------------------------------------------------------------
-
-#include <stdio.h>
-#include <stdlib.h>
 #include "MCAL/RCC/RCC_interface.h"
 #include "MCAL/GPIO/GPIO_interface.h"
+#include "MCAL/NVIC/NVIC_interface.h"
+#include "MCAL/EXTI/EXTI_interface.h"
+#include "MCAL/STK/STK_interface.h"
+#include "HAL/LEDMTRX/LEDMTRX_interface.h"
 
-void main (void)
+
+void main(void)
 {
+
+	/***************************/
+	/*  RCC Peripheral */
+	/* Set System Clock */
+	RCC_voidSetSystemClock();      // High Speed External
+	/*enable clock over GPIOA */
+	RCC_voidEnablePeripheralClock(RCC_AHB1,GPIO_PORT_A);   // GPIOA_Enable
+	/*enable clock over GPIOA */
+	RCC_voidEnablePeripheralClock(RCC_AHB1,GPIO_PORT_B);   // GPIOA_Enable
+	/***************************/
+	/*  SYSTICK Peripheral */
+	STK_voidInit();
+
+	/***************************/
+	/*  GPIO Peripheral */
+
+
+	/*  Led Matrix Peripheral */
+	/* (0, 102, 102, 0, 126, 66, 36, 24) */
+	u8 Local_u8PatternArray[8]= {0, 102, 102, 0, 126, 66, 36, 24};
+	LEDMTRX_voidInit();
+
+	while(1)
+	{
+
+		LEDMTRX_voidDisplayPattern(Local_u8PatternArray);
+
+	}
 
 }
