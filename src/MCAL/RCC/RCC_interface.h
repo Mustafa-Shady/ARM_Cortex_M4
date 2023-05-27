@@ -4,64 +4,73 @@
 #include "../../LIB/STD_TYPES.h"
 
 
-typedef enum {
-    OK,
-    WRONG_BusID
-}ERROR_STAT_type;
+
+//Private error state enum
+typedef enum
+{
+	InvalidPeripheralID,
+	InvalidBusID,
+	OK
+}Error_t;
+
+//Interfacing Macros
+/*controller's different busses*/
+#define RCC_AHB1    1
+#define RCC_AHB2    2
+#define RCC_APB1    3
+#define RCC_APB2    4
+
+/*ABH1 Peripherals*/
+#define AHB1_GPIOAEN        0
+#define AHB1_GPIOBEN        1
+#define AHB1_GPIOCEN        2
+#define AHB1_GPIODEN        3
+#define AHB1_GPIOEEN        4
+#define AHB1_GPIOHEN        7
+#define AHB1_CRCEN          12
+#define AHB1_DMA1EN         21
+#define AHB1_DMA2EN         22
+
+/*ABH2 Peripherals*/
+#define AHB2_OTGFSEN        7
+
+/*APB1 Peripherals*/
+#define APB1_TIM2EN         0
+#define APB1_TIM3EN         1
+#define APB1_TIM4EN         2
+#define APB1_TIM5EN         3
+#define APB1_WWDGEN         11
+#define APB1_SPI2EN         14
+#define APB1_SPI3EN         15
+#define APB1_USART2EN       17
+#define APB1_I2C1EN         21
+#define APB1_I2C2EN         22
+#define APB1_I2C3EN         23
+#define APB1_PWREN          28
+
+/*APB2 Peripherals*/
+#define APB2_TIM1EN         0
+#define APB2_USART1EN       4
+#define APB2_USART6EN       5
+#define APB2_ADC1EN         8
+#define APB2_SDIOEN         11
+#define APB2_SPI1EN         12
+#define APB2_SPI4EN         13
+#define APB2_SYSCFGEN       14
+#define APB2_TIM9EN         16
+#define APB2_TIM10EN        17
+#define APB2_TIM11EN        18
 
 
 
-/***************interfacing macros*****************/
-#define RCC_AHB1           1
-#define RCC_AHB2           2
-#define RCC_APB1           3
-#define RCC_APB2           4
-/***************RCC AHB1 peripherals macros******************/
-#define GPIO_PORT_A         0
-#define GPIO_PORT_B         1
-#define GPIO_PORT_C         2
-#define GPIO_PORT_D         3
-#define GPIO_PORT_E         4
-#define GPIO_PORT_H         7
-#define CRC                 12
-#define DMA1                21
-#define DMA2                22
+//Functions prototypes
+/*This function is used to Enable a certain peripheral's clock*/
+Error_t RCC_voidEnablePeripheralClock(u8 copy_u8BusID, s8 copy_u8PeripheralID);
 
-/***************RCC AHB2 peripherals macros******************/
-#define  OTGFS              7
+/*This function is used to Disable a certain peripheral's clock*/
+Error_t RCC_voidDisablePeripheralClock(u8 copy_u8BusID, s8 copy_u8PeripheralID);
 
-/***************RCC APB1 peripherals macros******************/
-#define TIMER_2             0
-#define TIMER_3             1
-#define TIMER_4             2
-#define TIMER_5             3
-#define WWDG                11
-#define SPI_2               14
-#define SPI_3               15
-#define USART_2             17
-#define I2C_1               21
-#define I2C_2               22
-#define I2C_3               23
-#define PWR                 28
-
-/***************RCC APB2 peripherals macros******************/
-#define TIMER_1             0
-#define USART_1             4
-#define USART_6             5
-#define ADC_1               3
-#define SDIO                11
-#define SPI_1               12
-#define SPI_4               13
-#define SYSCFG              14
-#define TIMER_9             16
-#define TIMER_10            17
-#define TIMER_11            18
-
-/*this function enable peripheral based on bus and the name of peripheral */
-ERROR_STAT_type RCC_voidEnablePeripheralClock(u8 copy_u8BusID,u8 copy_u8PeripheralID);
-/*this function disable peripheral based on bus and the name of peripheral */
-ERROR_STAT_type RCC_voidDisablePeripheralClock(u8 copy_u8BusID,u8 copy_u8PeripheralID);
-/*this function determine system clock */
+/*This function is used to set the system's clock clock*/
 void RCC_voidSetSystemClock(void);
 
 #endif

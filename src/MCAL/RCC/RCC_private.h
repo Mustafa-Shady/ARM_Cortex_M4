@@ -11,45 +11,76 @@
 
 #include "../../LIB/STD_TYPES.h"
 
-#define HSI             1
-#define HSE_RC          2
-#define HSE_CRYSTAL     3
-#define PLL             4
+//Private Configurations
+#define HSI            1
+#define HSE_RC     	   2
+#define HSE_CRYSTAL	   3
+#define PLL      	   4
 
 
-// RCC Registers
+//RCC registers
+/*RCC clock control register*/
+#define       RCC_CR           *((volatile u32 *)(0x40023800))
 
-#define RCC_CR                   *((volatile u32* )(0x40023800))
-#define RCC_PLLCFGR              *((volatile u32* )(0x40023804))
-#define RCC_CFGR                 *((volatile u32* )(0x40023808))
-#define RCC_CIR                  *((volatile u32* )(0x4002380C))
+/*RCC PLL configuration register*/
+#define       RCC_PLLCFGR      *((volatile u32 *)(0x40023804))
 
-#define RCC_AHB1RSTR             *((volatile u32* )(0x40023810))
-#define RCC_AHB2RSTR             *((volatile u32* )(0x40023814))
+/*RCC clock configuration register*/
+#define       RCC_CFGR         *((volatile u32 *)(0x40023808))
 
-#define RCC_APB1RSTR             *((volatile u32* )(0x40023820))
-#define RCC_APB2RSTR             *((volatile u32* )(0x40023824))
+/*RCC clock interrupt register */
+#define       RCC_CIR          *((volatile u32 *)(0x4002380C))
 
-#define RCC_AHB1ENR              *((volatile u32* )(0x40023830))
-#define RCC_AHB2ENR              *((volatile u32* )(0x40023834))
+/*RCC AHB1 peripheral reset register*/
+#define       RCC_AHB1RSTR     *((volatile u32 *)(0x40023810))
 
-#define RCC_RCC_APB1ENR          *((volatile u32* )(0x40023840))
-#define RCC_RCC_APB2ENR          *((volatile u32* )(0x40023844))
+/*RCC AHB2 peripheral reset register*/
+#define       RCC_AHB2RSTR     *((volatile u32 *)(0x40023814))
 
+/*RCC APB1 peripheral reset register for (RCC_APB1RSTR)*/
+#define       RCC_APB1RSTR     *((volatile u32 *)(0x40023820))
 
-#define RCC_AHB1LPENR            *((volatile u32* )(0x40023850))
-#define RCC_AHB2LPENR            *((volatile u32* )(0x40023854))
+/*RCC APB2 peripheral reset register (RCC_APB2RSTR)*/
+#define       RCC_APB2RSTR     *((volatile u32 *)(0x40023824))
 
-#define RCC_APB1LPENR            *((volatile u32* )(0x40023860))
-#define RCC_APB2LPENR            *((volatile u32* )(0x40023864))
+/*RCC AHB1 peripheral clock enable register*/
+#define       RCC_AHB1ENR      *((volatile u32 *)(0x40023830))
 
-#define RCC_BDCR                 *((volatile u32* )(0x40023870))
-#define RCC_CSR                  *((volatile u32* )(0x40023874))
+/*RCC AHB2 peripheral clock enable register */
+#define       RCC_AHB2ENR      *((volatile u32 *)(0x40023834))
 
-#define RCC_SSCGR                *((volatile u32* )(0x40023880))
-#define RCC_PLLI2SCFGR           *((volatile u32* )(0x40023884))
+/*RCC APB1 peripheral clock enable register*/
+#define       RCC_APB1ENR      *((volatile u32 *)(0x40023840))
 
-#define RCC_DCKCFGR              *((volatile u32* )(0x4002388C))
+/*RCC APB2 peripheral clock enable register*/
+#define       RCC_APB2ENR      *((volatile u32 *)(0x40023844))
+
+/*RCC AHB1 peripheral clock enable in low power mode register*/
+#define       RCC_AHB1LPENR    *((volatile u32 *)(0x40023850))
+
+/*RCC AHB2 peripheral clock enable in low power mode register*/
+#define       RCC_AHB2LPENR    *((volatile u32 *)(0x40023854))
+
+/*RCC APB1 peripheral clock enable in low power mode register*/
+#define       RCC_APB1LPENR    *((volatile u32 *)(0x40023860))
+
+/*RCC APB2 peripheral clock enabled in low power mode register*/
+#define       RCC_APB2LPENR    *((volatile u32 *)(0x40023864))
+
+/*RCC Backup domain control register*/
+#define       RCC_BDCR         *((volatile u32 *)(0x40023870))
+
+/*RCC clock control & status register*/
+#define       RCC_CSR          *((volatile u32 *)(0x40023874))
+
+/*RCC spread spectrum clock generation register */
+#define       RCC_SSCGR        *((volatile u32 *)(0x40023880))
+
+/*RCC PLLI2S configuration register*/
+#define       RCC_PLLI2SCFGR   *((volatile u32 *)(0x40023884))
+
+/* RCC Dedicated Clocks Configuration Register*/
+#define       RCC_DCKCFGR      *((volatile u32 *)(0x4002388C))
 
 
 

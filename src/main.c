@@ -18,9 +18,9 @@ void main(void)
 	/* Set System Clock */
 	RCC_voidSetSystemClock();      // High Speed External
 	/*enable clock over GPIOA */
-	RCC_voidEnablePeripheralClock(RCC_AHB1,GPIO_PORT_A);   // GPIOA_Enable
+	RCC_voidEnablePeripheralClock(RCC_AHB1,AHB1_GPIOAEN);   // GPIOA_Enable
 	/*enable clock over GPIOA */
-	RCC_voidEnablePeripheralClock(RCC_AHB1,GPIO_PORT_B);   // GPIOA_Enable
+	RCC_voidEnablePeripheralClock(RCC_AHB1,AHB1_GPIOBEN);   // GPIOA_Enable
 	/***************************/
 	/*  SYSTICK Peripheral */
 	STK_voidInit();
@@ -31,7 +31,7 @@ void main(void)
 
 	/*  Led Matrix Peripheral */
 	/* (0, 102, 102, 0, 126, 66, 36, 24) */
-	u8 Local_u8PatternArray[8]= {0, 102, 102, 0, 126, 66, 36, 24};
+	u8 Local_u8PatternArray[8]= {0x00,0x66,0xff,0xff,0xff,0x7e,0x3c,0x18};
 	LEDMTRX_voidInit();
 
 	while(1)
