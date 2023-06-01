@@ -19,6 +19,9 @@ u32 STK_u32GetRemainingTime(void);
 
 u32 STK_u32GetElapsedTime(void);
 
+void STK_voidDelayAsyncSingle(u32 Copy_u32Delay_us , void(*Copy_ptrToFunc)(void));
+
+void STK_voidDelayAsyncPeriodic(u32 Copy_u32Delay_us , void(*Copy_ptrToFunc)(void));
 
 
 #endif /* MCAL_STK_STK_INTERFACE_H_ */

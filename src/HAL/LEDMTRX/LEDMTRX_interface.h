@@ -17,7 +17,7 @@
 void LEDMTRX_voidInit(void);
 
 /*This function is to display a specific pattern over Led Matrix*/
-void LEDMTRX_voidDisplayPattern(u8 Copy_au8PaterrnArray[]);
+void LEDMTRX_voidDisplayPattern(u8 Copy_au8PaterrnArray[],u16 time);
 
 /*This function is to deactivate all columns and set all leds to be OFF*/
 void LEDMTRX_voidTurnOff(void);

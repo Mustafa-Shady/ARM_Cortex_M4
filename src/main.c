@@ -8,37 +8,59 @@
 #include "MCAL/EXTI/EXTI_interface.h"
 #include "MCAL/STK/STK_interface.h"
 #include "HAL/LEDMTRX/LEDMTRX_interface.h"
+#include "HAL/SERinPARout/SinPout_interface.h"
+#include "song.h" 
 
+
+/**
+ * DONE: AUDIO 
+ * DONE: Display name LEDMATTRIX
+ * TODO: 3-bit LEDMATRIX
+ * TODO: DELAY_ASYNC periodic song
+ * TODO: RTOS
+ * 
+*/
 
 void main(void)
 {
 
 	/***************************/
 	/*  RCC Peripheral */
+
 	/* Set System Clock */
 	RCC_voidSetSystemClock();      // High Speed External
+
 	/*enable clock over GPIOA */
 	RCC_voidEnablePeripheralClock(RCC_AHB1,AHB1_GPIOAEN);   // GPIOA_Enable
+
 	/*enable clock over GPIOA */
-	RCC_voidEnablePeripheralClock(RCC_AHB1,AHB1_GPIOBEN);   // GPIOA_Enable
-	/***************************/
+	// RCC_voidEnablePeripheralClock(RCC_AHB1,AHB1_GPIOBEN);   // GPIOB_Enable
+
+	
 	/*  SYSTICK Peripheral */
 	STK_voidInit();
 
-	/***************************/
-	/*  GPIO Peripheral */
+	/*  NVIC Peripheral */
 
-
-	/*  Led Matrix Peripheral */
-	/* (0, 102, 102, 0, 126, 66, 36, 24) */
-	u8 Local_u8PatternArray[8]= {0x00,0x66,0xff,0xff,0xff,0x7e,0x3c,0x18};
-	LEDMTRX_voidInit();
-
+		SIN_enable_output(SinPout1);
+		SIN_enable_output(SinPout2);
 	while(1)
-	{
+	{	
+		for(u8 i = 0 ; i < 200 ; i++)
+		{
 
-		LEDMTRX_voidDisplayPattern(Local_u8PatternArray);
+		SIN_shift_out(i,SinPout2);
+		SIN_shift_out(i,SinPout1);
+		SIN_latch_data(SinPout1);
+		SIN_latch_data(SinPout2);
+		STK_voidDelaySync(10000);
+		} 
+		
 
 	}
 
+
+
+
 }
+

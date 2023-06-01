@@ -67,8 +67,11 @@ void LEDMTRX_voidTurnOff(void)
 }
 
 
-void LEDMTRX_voidDisplayPattern(u8 Copy_au8PaterrnArray[])
-{
+void LEDMTRX_voidDisplayPattern(u8 Copy_au8PaterrnArray[] , u16 time)
+{	
+	u8 Iterator_25time = 0;
+	for(Iterator_25time=0 ; Iterator_25time<(time/25) ; Iterator_25time++)
+	{
 
 	/*Local iterator to loop over columns*/
 	u8 Local_u8ColsIterator = 0 ;
@@ -96,5 +99,6 @@ void LEDMTRX_voidDisplayPattern(u8 Copy_au8PaterrnArray[])
 
 		/*Led matrix reset before the new activation*/
 		LEDMTRX_voidTurnOff();
+	}
 	}
 }

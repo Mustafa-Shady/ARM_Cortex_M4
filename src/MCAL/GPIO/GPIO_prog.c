@@ -28,7 +28,7 @@ void GPIO_voidInitOutputPin(u8 Copy_u8PortID, u8 Copy_u8PinID, u8 Copy_u8PinType
 		break;
 
 	case GPIO_PORTB:
-		/*Set direction of the pin to be output*/
+		/*Set direction o f the pin to be output*/
 		/*bit masking*/
 		GPIOB->MODER &= ~(0b11 << (Copy_u8PinID * 2));
 		GPIOB->MODER |=  (0b01 << (Copy_u8PinID * 2));
@@ -153,3 +153,5 @@ void GPIO_voidSetOutPinValueFast(u8 Copy_u8PortID, u8 Copy_u8PinID, u8 Copy_u8Va
 		break;
 	}
 }
+
+
